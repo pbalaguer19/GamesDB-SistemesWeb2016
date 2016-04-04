@@ -11,14 +11,29 @@ class Company(models.Model):
     mail = models.TextField(max_length=50, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
 
+    def __unicode__(self):
+        return u"%s" % self.name
+    def get_absolute_url(self):
+        return reverse('gamesApp:company_detail', kwargs={'pk': self.pk})
+
 class Platform(models.Model):
     name = models.TextField()
     price = models.IntegerField(blank=True, null=True)
     release_year = models.IntegerField(blank=True, null=True)
 
+    def __unicode__(self):
+        return u"%s" % self.name
+    def get_absolute_url(self):
+        return reverse('gamesApp:platform_detail', kwargs={'pk': self.pk})
+
 class Genre(models.Model):
     name = models.TextField()
     description = models.TextField(blank=True, null=True)
+
+    def __unicode__(self):
+        return u"%s" % self.name
+    def get_absolute_url(self):
+        return reverse('gamesApp:genre_detail', kwargs={'pk': self.pk})
 
 class Review(models.Model):
     RATING_CHOICES = ((1, 'one'), (2, 'two'), (3, 'three'), (4, 'four'),\
@@ -38,8 +53,13 @@ class Game(models.Model):
     companies = models.ManyToManyField(Company)
     platforms = models.ManyToManyField(Platform)
     genres = models.ManyToManyField(Genre)
-    reviews = models.ManyToManyField(Review)
-    users = models.ManyToManyField(User)
+    reviews = models.ManyToManyField(Review, blank=True, null=True)
+    users = models.ManyToManyField(User, blank=True, null=True)
+
+    def __unicode__(self):
+        return u"%s" % self.name
+    def get_absolute_url(self):
+        return reverse('gamesApp:game_detail', kwargs={'pk': self.pk})
 
 class CompanyGame(Company):
     games = models.ManyToManyField(Game, blank=True, null=True)

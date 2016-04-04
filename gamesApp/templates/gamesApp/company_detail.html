@@ -1,0 +1,39 @@
+{% extends "gamesApp/base.html" %}
+{% block content %}
+<h1>
+    {{ company.name }}
+</h1>
+
+<h2>Abbreviation:</h2>
+<p>
+    {{ company.abbreviation }}
+</p>
+
+<h2>City:</h2>
+<p>
+    {{ company.city }}
+</p>
+
+<h2>Mail:</h2>
+<p>
+    {{ company.mail }}
+</p>
+
+<h2>Website:</h2>
+<p>
+    {{ company.website }}
+</p>
+
+<h2>Games</h2>
+<ul>
+    {% for game in compamy.companygame_set.all %}
+        <li>
+            <p>{{ game.name }}</p>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+{% block footer %}
+    Created by {{ restaurant.user }} on {{ restaurant.date }}
+{% endblock %}

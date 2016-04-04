@@ -1,0 +1,26 @@
+{% extends "gamesApp/base.html" %}
+{% block content %}
+<h1>
+    {{ platform.name }}
+</h1>
+
+<h2>Price:</h2>
+<p>
+    {{ platform.price }}
+</p>
+
+<h2>Release Year:</h2>
+<p>
+    {{ platform.release_year }}
+</p>
+
+<h2>Games</h2>
+<ul>
+    {% for game in platform.platformgame_set.all %}
+        <li>
+            <p>{{ game.name }}</p>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

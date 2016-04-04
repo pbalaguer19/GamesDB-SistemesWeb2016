@@ -1,0 +1,12 @@
+{% extends "gamesApp/base.html" %}
+{% block content %}
+<h1>
+    Home Page
+</h1>
+<ul>
+  <li><a href="{% url 'gamesApp:companies' html %}">
+      Companies list</a></li>
+  <li><a href="{% url 'gamesApp:platforms' html %}">
+      Platforms list</a></li>
+</ul>
+{% endblock %}

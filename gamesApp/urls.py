@@ -3,9 +3,10 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.base import TemplateView
 
-from models import Company
-from views import CompanyList, CompanyDetail, PlatformsList, PlatformDetail
-
+from models import Company, Platform
+from views import CompanyList, CompanyDetail, PlatformsList,\
+                    PlatformDetail, GenresList,GenreDetail,\
+                    GamesList, GameDetail
 urlpatterns = patterns('',
 
     # Home page
@@ -32,5 +33,25 @@ urlpatterns = patterns('',
     url(r'^platforms/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
         PlatformDetail.as_view(),
         name='platform_detail'),
+
+    # Genres list
+    url(r'^genres\.(?P<extension>(json|xml|html))$',
+        GenresList.as_view(),
+        name='genres_list'),
+
+    # Genre details
+    url(r'^genres/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
+        GenreDetail.as_view(),
+        name='genre_detail'),
+
+    # Games list
+    url(r'^games\.(?P<extension>(json|xml|html))$',
+        GamesList.as_view(),
+        name='games_list'),
+
+    # Game details
+    url(r'^games/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
+        GameDetail.as_view(),
+        name='game_detail'),
 
 )

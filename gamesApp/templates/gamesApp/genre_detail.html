@@ -1,32 +1,17 @@
 {% extends "gamesApp/base.html" %}
 {% block content %}
 <h1>
-    {{ company.name }}
+    {{ genre.name }}
 </h1>
 
-<h2>Abbreviation:</h2>
+<h2>Description:</h2>
 <p>
-    {{ company.abbreviation }}
-</p>
-
-<h2>City:</h2>
-<p>
-    {{ company.city }}
-</p>
-
-<h2>Mail:</h2>
-<p>
-    {{ company.mail }}
-</p>
-
-<h2>Website:</h2>
-<p>
-    {{ company.website }}
+    {{ genre.description }}
 </p>
 
 <h2>Games</h2>
 <ul>
-    {% for game in company.games.all %}
+    {% for game in genre.games.all %}
         <li>
           <p><a href="{% url 'gamesApp:game_detail' game.id 'html' %}">
             {{ game.name }} </a></p>

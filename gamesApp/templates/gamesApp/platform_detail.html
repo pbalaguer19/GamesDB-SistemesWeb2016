@@ -16,9 +16,10 @@
 
 <h2>Games</h2>
 <ul>
-    {% for game in platform.platformgame_set.all %}
+    {% for game in platform.games.all %}
         <li>
-            <p>{{ game.name }}</p>
+            <p><a href="{% url 'gamesApp:game_detail' game.id 'html' %}">
+              {{ game.name }} </a></p>
         </li>
     {% endfor %}
 </ul>

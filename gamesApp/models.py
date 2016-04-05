@@ -50,10 +50,9 @@ class Game(models.Model):
     release_year = models.IntegerField(blank=True, null=True)
     website = models.URLField(blank=True, null=True)
     # Add image
-    companies = models.ManyToManyField(Company)
-    platforms = models.ManyToManyField(Platform)
-    genres = models.ManyToManyField(Genre)
-    reviews = models.ManyToManyField(Review, blank=True, null=True)
+    companies = models.ManyToManyField(Company, related_name="games")
+    platforms = models.ManyToManyField(Platform, related_name="games")
+    genres = models.ManyToManyField(Genre, related_name="games")
     users = models.ManyToManyField(User, blank=True, null=True)
 
     def __unicode__(self):
@@ -61,14 +60,7 @@ class Game(models.Model):
     def get_absolute_url(self):
         return reverse('gamesApp:game_detail', kwargs={'pk': self.pk})
 
-class CompanyGame(Company):
-    games = models.ManyToManyField(Game, blank=True, null=True)
-
-class PlatformGame(Platform):
-    games = models.ManyToManyField(Game, blank=True, null=True)
-
-class GenreGame(Genre):
-    games = models.ManyToManyField(Game, blank=True, null=True)
-
 class GameReview(Review):
     game = models.ForeignKey(Game)
+    def __unicode__(self):
+        return u"Review %s" % self.game.name

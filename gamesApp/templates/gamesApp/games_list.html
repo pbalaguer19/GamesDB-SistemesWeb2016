@@ -1,0 +1,13 @@
+{% extends "gamesApp/base.html" %}
+{% block content %}
+<h1>
+    Games
+</h1>
+<ul>
+    {% for game in latest_games_list %}
+        <li><a href="{% url 'gamesApp:game_detail' game.id 'html' %}">
+            {{ game.name }}</a></li>
+    {% empty %}<li>Sorry, no games registered yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

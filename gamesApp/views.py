@@ -8,7 +8,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
 
-from models import Company, CompanyGame, Platform
+from models import Company, Platform, Genre, Game
 
 class CompanyList(ListView):
     model = Company
@@ -34,4 +34,30 @@ class PlatformDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PlatformDetail, self).get_context_data(**kwargs)
+        return context
+
+class GenresList(ListView):
+    model = Genre
+    template_name = 'gamesApp/genres_list.html'
+    context_object_name = 'latest_genres_list'
+
+class GenreDetail(DetailView):
+    model = Genre
+    template_name = 'gamesApp/genre_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GenreDetail, self).get_context_data(**kwargs)
+        return context
+
+class GamesList(ListView):
+    model = Game
+    template_name = 'gamesApp/games_list.html'
+    context_object_name = 'latest_games_list'
+
+class GameDetail(DetailView):
+    model = Game
+    template_name = 'gamesApp/game_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GameDetail, self).get_context_data(**kwargs)
         return context

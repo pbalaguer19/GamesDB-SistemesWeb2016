@@ -10,12 +10,35 @@ from django.views.generic.edit import CreateView
 
 from models import Company, Platform, Genre, Game
 
-class CompanyList(ListView):
+
+class ConnegResponseMixin(TemplateResponseMixin):
+
+    def render_json_object_response(self, objects, **kwargs):
+        json_data = serializers.serialize(u"json", objects, **kwargs)
+        return HttpResponse(json_data, content_type=u"application/json")
+
+    def render_xml_object_response(self, objects, **kwargs):
+        xml_data = serializers.serialize(u"xml", objects, **kwargs)
+        return HttpResponse(xml_data, content_type=u"application/xml")
+
+    def render_to_response(self, context, **kwargs):
+        if 'extension' in self.kwargs:
+            try:
+                objects = [self.object]
+            except AttributeError:
+                objects = self.object_list
+            if self.kwargs['extension'] == 'json':
+                return self.render_json_object_response(objects=objects)
+            elif self.kwargs['extension'] == 'xml':
+                return self.render_xml_object_response(objects=objects)
+        return super(ConnegResponseMixin, self).render_to_response(context)
+
+class CompanyList(ListView, ConnegResponseMixin):
     model = Company
     template_name = 'gamesApp/companies_list.html'
     context_object_name = 'latest_companies_list'
 
-class CompanyDetail(DetailView):
+class CompanyDetail(DetailView, ConnegResponseMixin):
     model = Company
     template_name = 'gamesApp/company_detail.html'
 

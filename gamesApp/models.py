@@ -53,7 +53,7 @@ class Game(models.Model):
     companies = models.ManyToManyField(Company, related_name="games")
     platforms = models.ManyToManyField(Platform, related_name="games")
     genres = models.ManyToManyField(Genre, related_name="games")
-    users = models.ManyToManyField(User, blank=True, null=True)
+    users = models.ManyToManyField(User, blank=True)
 
     def __unicode__(self):
         return u"%s" % self.name

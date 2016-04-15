@@ -1,0 +1,25 @@
+{% if form.errors %}
+        <p>La contrassenya no es correcta. Torna-ho a intentar.</p>
+    {% endif %}
+
+    <h2> GamesDB Login </h2>
+
+    <form method="post" action="{% url 'login' %}">
+        <table>
+            <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+            <tr>
+                <td><input type="hidden" name="next" value="{{ next }}"/></td>
+            </tr>
+        </table>
+
+        <input type="submit" value="login" />
+
+        {% csrf_token %}
+    </form>

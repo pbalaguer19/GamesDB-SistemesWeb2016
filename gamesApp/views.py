@@ -46,12 +46,12 @@ class CompanyDetail(DetailView, ConnegResponseMixin):
         context = super(CompanyDetail, self).get_context_data(**kwargs)
         return context
 
-class PlatformsList(ListView):
+class PlatformsList(ListView, ConnegResponseMixin):
     model = Platform
     template_name = 'gamesApp/platforms_list.html'
     context_object_name = 'latest_platforms_list'
 
-class PlatformDetail(DetailView):
+class PlatformDetail(DetailView, ConnegResponseMixin):
     model = Platform
     template_name = 'gamesApp/platform_detail.html'
 
@@ -59,12 +59,12 @@ class PlatformDetail(DetailView):
         context = super(PlatformDetail, self).get_context_data(**kwargs)
         return context
 
-class GenresList(ListView):
+class GenresList(ListView, ConnegResponseMixin):
     model = Genre
     template_name = 'gamesApp/genres_list.html'
     context_object_name = 'latest_genres_list'
 
-class GenreDetail(DetailView):
+class GenreDetail(DetailView, ConnegResponseMixin):
     model = Genre
     template_name = 'gamesApp/genre_detail.html'
 
@@ -72,12 +72,12 @@ class GenreDetail(DetailView):
         context = super(GenreDetail, self).get_context_data(**kwargs)
         return context
 
-class GamesList(ListView):
+class GamesList(ListView, ConnegResponseMixin):
     model = Game
     template_name = 'gamesApp/games_list.html'
     context_object_name = 'latest_games_list'
 
-class GameDetail(DetailView):
+class GameDetail(DetailView, ConnegResponseMixin):
     model = Game
     template_name = 'gamesApp/game_detail.html'
 

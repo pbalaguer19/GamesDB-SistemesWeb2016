@@ -15,6 +15,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import TemplateView
+from django.contrib.auth.views import login, logout
 
 
 urlpatterns = [
@@ -22,5 +23,7 @@ urlpatterns = [
     url(r'^$',
         TemplateView.as_view(template_name="gamesApp/main.html"),
         name="Home"),
-    url(r'^gamesApp/', include('gamesApp.urls', namespace='gamesApp' ))
+    url(r'^gamesApp/', include('gamesApp.urls', namespace='gamesApp' )),
+    url(r'^accounts/login/$', login, name='login'),
+    url(r'^accounts/logout/$', logout, name='logout'),
 ]

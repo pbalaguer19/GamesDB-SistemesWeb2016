@@ -49,7 +49,6 @@ class Game(models.Model):
     description = models.TextField(blank=True, null=True)
     release_year = models.IntegerField(blank=True, null=True)
     website = models.URLField(blank=True, null=True)
-    # Add image
     companies = models.ManyToManyField(Company, related_name="games")
     platforms = models.ManyToManyField(Platform, related_name="games")
     genres = models.ManyToManyField(Genre, related_name="games")

@@ -9,6 +9,7 @@ from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import CreateView
 
 from models import Company, Platform, Genre, Game
+from forms import CompanyForm, PlatformForm, GenreForm, GameForm
 
 
 class ConnegResponseMixin(TemplateResponseMixin):
@@ -46,6 +47,15 @@ class CompanyDetail(DetailView, ConnegResponseMixin):
         context = super(CompanyDetail, self).get_context_data(**kwargs)
         return context
 
+class CompanyCreate(CreateView):
+    model = Company
+    template_name = 'gamesApp/form.html'
+    form_class = CompanyForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CompanyCreate, self).form_valid(form)
+
 class PlatformsList(ListView, ConnegResponseMixin):
     model = Platform
     template_name = 'gamesApp/platforms_list.html'
@@ -71,6 +81,15 @@ class GenreDetail(DetailView, ConnegResponseMixin):
     def get_context_data(self, **kwargs):
         context = super(GenreDetail, self).get_context_data(**kwargs)
         return context
+
+class GenreCreate(CreateView):
+    model = Genre
+    template_name = 'gamesApp/form.html'
+    form_class = GenreForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(GenreCreate, self).form_valid(form)
 
 class GamesList(ListView, ConnegResponseMixin):
     model = Game

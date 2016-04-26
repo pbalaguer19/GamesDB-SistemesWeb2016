@@ -2,6 +2,7 @@
 {% block content %}
 <h1>
     Genres
+    {% if user.is_authenticated %}(<a href="{% url 'gamesApp:genre_create' %}">add</a>){% endif %}
 </h1>
 <ul>
     {% for genre in latest_genres_list %}

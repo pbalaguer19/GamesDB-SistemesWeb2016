@@ -4,9 +4,10 @@ from django.views.generic import UpdateView
 from django.views.generic.base import TemplateView
 
 from models import Company, Platform
-from views import CompanyList, CompanyDetail, PlatformsList,\
-                    PlatformDetail, GenresList,GenreDetail,\
-                    GamesList, GameDetail
+from views import CompanyList, CompanyDetail, CompanyCreate,\
+                PlatformsList, PlatformDetail,\
+                GenresList,GenreDetail, GenreCreate, \
+                GamesList, GameDetail
 urlpatterns = patterns('',
 
     # Home page
@@ -23,6 +24,11 @@ urlpatterns = patterns('',
     url(r'^companies/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
         CompanyDetail.as_view(),
         name='company_detail'),
+
+    # Create Company
+    url(r'^companies/create/$',
+        CompanyCreate.as_view(),
+        name='company_create'),
 
     # Platforms list
     url(r'^platforms\.(?P<extension>(json|xml|html))$',
@@ -43,6 +49,11 @@ urlpatterns = patterns('',
     url(r'^genres/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
         GenreDetail.as_view(),
         name='genre_detail'),
+
+    # Create Genre
+    url(r'^genres/create/$',
+        GenreCreate.as_view(),
+        name='genre_create'),
 
     # Games list
     url(r'^games\.(?P<extension>(json|xml|html))$',

@@ -2,6 +2,7 @@
 {% block content %}
 <h1>
     Games
+    {% if user.is_authenticated %}(<a href="{% url 'gamesApp:game_create' %}">add</a>){% endif %}
 </h1>
 <ul>
     {% for game in latest_games_list %}

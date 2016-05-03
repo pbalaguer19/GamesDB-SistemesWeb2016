@@ -5,9 +5,9 @@ from django.views.generic.base import TemplateView
 
 from models import Company, Platform
 from views import CompanyList, CompanyDetail, CompanyCreate,\
-                PlatformsList, PlatformDetail,\
+                PlatformsList, PlatformDetail, PlatformCreate,\
                 GenresList,GenreDetail, GenreCreate, \
-                GamesList, GameDetail
+                GamesList, GameDetail, GameCreate
 urlpatterns = patterns('',
 
     # Home page
@@ -40,6 +40,11 @@ urlpatterns = patterns('',
         PlatformDetail.as_view(),
         name='platform_detail'),
 
+    # Create Platform
+    url(r'^platforms/create/$',
+        PlatformCreate.as_view(),
+        name='platform_create'),
+
     # Genres list
     url(r'^genres\.(?P<extension>(json|xml|html))$',
         GenresList.as_view(),
@@ -64,5 +69,10 @@ urlpatterns = patterns('',
     url(r'^games/(?P<pk>\d+)\.(?P<extension>(json|xml|html))$',
         GameDetail.as_view(),
         name='game_detail'),
+
+    # Create Game
+    url(r'^games/create/$',
+        GameCreate.as_view(),
+        name='game_create'),
 
 )

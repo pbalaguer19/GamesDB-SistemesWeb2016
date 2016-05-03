@@ -69,6 +69,15 @@ class PlatformDetail(DetailView, ConnegResponseMixin):
         context = super(PlatformDetail, self).get_context_data(**kwargs)
         return context
 
+class PlatformCreate(CreateView):
+    model = Platform
+    template_name = 'gamesApp/form.html'
+    form_class = PlatformForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(PlatformCreate, self).form_valid(form)
+
 class GenresList(ListView, ConnegResponseMixin):
     model = Genre
     template_name = 'gamesApp/genres_list.html'
@@ -103,3 +112,12 @@ class GameDetail(DetailView, ConnegResponseMixin):
     def get_context_data(self, **kwargs):
         context = super(GameDetail, self).get_context_data(**kwargs)
         return context
+
+class GameCreate(CreateView):
+    model = Game
+    template_name = 'gamesApp/form.html'
+    form_class = GameForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(GameCreate, self).form_valid(form)

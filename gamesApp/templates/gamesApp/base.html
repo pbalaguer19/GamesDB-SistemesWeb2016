@@ -18,7 +18,17 @@
       {% endblock %}
   </div>
 <div id="sidebar">
-    {% block sidebar %}<ul><li><a href="/">Home</a></li></ul>{% endblock %}
+    {% block sidebar %}
+    <ul><li><a href="/">Home</a></li></ul>
+    <ul><li><a href="/gamesApp/companies.html">
+        Companies list</a></li></ul>
+    <ul><li><a href="/gamesApp/platforms.html">
+        Platforms list</a></li></ul>
+    <ul><li><a href="/gamesApp/genres.html">
+        Genres list</a></li></ul>
+    <ul><li><a href="/gamesApp/games.html">
+        Games list</a></li></ul>
+    {% endblock %}
 </div>
 <div id="content">
     {% block content %}

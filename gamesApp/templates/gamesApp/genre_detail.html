@@ -2,6 +2,9 @@
 {% block content %}
 <h1>
     {{ genre.name }}
+    {% if user == genre.user %}
+      (<a href="{% url 'gamesApp:genre_edit' genre.id %}">edit</a>)
+    {% endif %}
 </h1>
 
 <h2>Description:</h2>
@@ -19,4 +22,5 @@
     {% endfor %}
 </ul>
 
+Created by {{ genre.user }} on {{ genre.date }}
 {% endblock %}

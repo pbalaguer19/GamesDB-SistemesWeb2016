@@ -4,19 +4,19 @@ from models import Company, Platform, Genre, Game
 class CompanyForm(ModelForm):
     class Meta:
         model = Company
-        exclude = ()
+        exclude = ('user', 'date',)
 
 class PlatformForm(ModelForm):
     class Meta:
         model = Platform
-        exclude = ()
+        exclude = ('user', 'date',)
 
 class GenreForm(ModelForm):
     class Meta:
         model = Genre
-        exclude = ()
+        exclude = ('user', 'date',)
 
 class GameForm(ModelForm):
     class Meta:
         model = Game
-        exclude = ()
+        exclude = ('user', 'date',)

@@ -2,6 +2,9 @@
 {% block content %}
 <h1>
     {{ platform.name }}
+    {% if user == platform.user %}
+      (<a href="{% url 'gamesApp:platform_edit' platform.id %}">edit</a>)
+    {% endif %}
 </h1>
 
 <h2>Price:</h2>
@@ -24,4 +27,5 @@
     {% endfor %}
 </ul>
 
+Created by {{ platform.user }} on {{ platform.date }}
 {% endblock %}

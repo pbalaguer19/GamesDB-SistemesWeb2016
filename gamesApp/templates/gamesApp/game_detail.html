@@ -2,6 +2,9 @@
 {% block content %}
 <h1>
     {{ game.name }}
+    {% if user == game.user %}
+      (<a href="{% url 'gamesApp:game_edit' game.id %}">edit</a>)
+    {% endif %}
 </h1>
 
 <h2>Description:</h2>
@@ -59,4 +62,6 @@
         </li>
     {% endfor %}
 </ul>
+
+Created by {{ game.user }} on {{ game.date }}
 {% endblock %}

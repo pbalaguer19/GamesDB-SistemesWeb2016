@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from datetime import date
 
 # Create your models here.
@@ -10,6 +11,8 @@ class Company(models.Model):
     city = models.TextField(max_length=100, blank=True, null=True)
     mail = models.TextField(max_length=50, blank=True, null=True)
     website = models.URLField(blank=True, null=True)
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -20,6 +23,8 @@ class Platform(models.Model):
     name = models.TextField()
     price = models.IntegerField(blank=True, null=True)
     release_year = models.IntegerField(blank=True, null=True)
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -29,6 +34,8 @@ class Platform(models.Model):
 class Genre(models.Model):
     name = models.TextField()
     description = models.TextField(blank=True, null=True)
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -52,7 +59,9 @@ class Game(models.Model):
     companies = models.ManyToManyField(Company, related_name="games")
     platforms = models.ManyToManyField(Platform, related_name="games")
     genres = models.ManyToManyField(Genre, related_name="games")
-    users = models.ManyToManyField(User, blank=True)
+
+    user = models.ForeignKey(User, default=1)
+    date = models.DateField(default=date.today)
 
     def __unicode__(self):
         return u"%s" % self.name

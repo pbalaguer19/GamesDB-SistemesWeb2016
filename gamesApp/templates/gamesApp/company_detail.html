@@ -2,6 +2,9 @@
 {% block content %}
 <h1>
     {{ company.name }}
+    {% if user == company.user %}
+      (<a href="{% url 'gamesApp:company_edit' company.id %}">edit</a>)
+    {% endif %}
 </h1>
 
 <h2>Abbreviation:</h2>
@@ -34,4 +37,5 @@
     {% endfor %}
 </ul>
 
+Created by {{ company.user }} on {{ company.date }}
 {% endblock %}

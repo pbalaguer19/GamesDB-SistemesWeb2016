@@ -28,16 +28,28 @@
                 api_key: "d4743cd79187148e85372f03179b38b884dbc9ac",
                 format: "jsonp",
                 resources: "company",
-                field_list: "abbreviation,name"
+                field_list: "abbreviation,name",
+                limit: "5"
               },
               success: function(data) {
-                response( $.map(data.results, function(item) {
-                  return {
-                    label: item.name,
-                    value: item.name,
-                    name: item.name
-                  }
-                }));
+                if(data.length == 0){
+                  var result = [
+                    {
+                      label: "No s'han trobat resultats",
+                      value: response.term
+                    }
+                  ];
+                  response(result)
+                }
+                else{
+                  response( $.map(data.results, function(item) {
+                    return {
+                      label: item.name,
+                      value: item.name,
+                      name: item.name
+                    }
+                  }));
+                }
               }
             });
           },

@@ -49,7 +49,7 @@ class CompanyDetail(DetailView, ConnegResponseMixin):
 
 class CompanyCreate(CreateView):
     model = Company
-    template_name = 'gamesApp/form.html'
+    template_name = 'gamesApp/company_form.html'
     form_class = CompanyForm
 
     def form_valid(self, form):

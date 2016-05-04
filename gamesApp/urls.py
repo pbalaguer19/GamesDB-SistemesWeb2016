@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     url(r'^companies/(?P<pk>\d+)/edit/$',
         UpdateView.as_view(
             model=Company,
-            template_name='gamesApp/form.html',
+            template_name='gamesApp/company_form.html',
             form_class=CompanyForm),
         name='company_edit'),
 

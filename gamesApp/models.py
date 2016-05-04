@@ -8,6 +8,7 @@ from datetime import date
 class Company(models.Model):
     name = models.TextField()
     abbreviation = models.TextField(blank=True, null=True)
+    country = models.TextField(blank=True, null=True)
     city = models.TextField(max_length=100, blank=True, null=True)
     mail = models.TextField(max_length=50, blank=True, null=True)
     website = models.URLField(blank=True, null=True)

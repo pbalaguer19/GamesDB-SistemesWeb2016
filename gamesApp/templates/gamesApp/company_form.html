@@ -1,0 +1,60 @@
+{% extends "gamesApp/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<script>
+  $(function() {
+        $.getJSON("{% static "countries.json" %}", {}, function (countries) {
+            $("#id_country").autocomplete({
+                source: countries
+            });
+        });
+
+        $("#id_name").autocomplete({
+          source: function(request, response) {
+            $.ajax({
+              url: "http://www.giantbomb.com/api/search",
+              dataType: "jsonp",
+              jsonp: "json_callback",
+              crossDomain: "true",
+              data: {
+                query: request.term,
+                api_key: "d4743cd79187148e85372f03179b38b884dbc9ac",
+                format: "jsonp",
+                resources: "company",
+                field_list: "abbreviation,name",
+                limit: "5"
+              },
+              success: function(data) {
+                  response( $.map(data.results, function(item) {
+                    return {
+                      label: item.name,
+                      value: item.name,
+                      name: item.name
+                    }
+                  }));
+              }
+            });
+          },
+          minLength: 2,
+          select: function( event, ui ) {
+            if (ui.item) {
+              $("#id_name").val(ui.item.name);
+              $("#id_city").val(ui.item.name);
+              //$("#id_mail").val("hola");
+            }
+          }
+        });
+    });
+</script>
+
+<form method="post" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit"/>
+</form>
+
+{% endblock %}

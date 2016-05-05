@@ -1,14 +1,50 @@
 {% extends "gamesApp/base.html" %}
 {% block content %}
-<h1>
-    Companies
-    {% if user.is_authenticated %}(<a href="{% url 'gamesApp:company_create' %}">add</a>){% endif %}
-</h1>
-<ul>
-    {% for company in latest_companies_list %}
-        <li><a href="{% url 'gamesApp:company_detail' company.id 'html' %}">
-            {{ company.name }}</a></li>
-    {% empty %}<li>Sorry, no companies registered yet.</li>
-    {% endfor %}
-</ul>
+
+<div class="container">
+    <div class="row">
+
+      <div class="col-md-3">
+          <p class="lead">gamesApp</p>
+          <div class="list-group">
+              <a href="/" class="list-group-item">Home</a>
+              <a href="/gamesApp/companies.html" class="list-group-item active">Companies</a>
+              <a href="/gamesApp/platforms.html" class="list-group-item">Platforms</a>
+              <a href="/gamesApp/genres.html" class="list-group-item">Genres</a>
+              <a href="/gamesApp/games.html" class="list-group-item">Games</a>
+          </div>
+      </div>
+
+      <div class="col-md-9">
+          <div class="well">
+              {% if user.is_authenticated %}
+                <div class="text-right">
+                    <a class="btn btn-success" href="{% url 'gamesApp:company_create' %}">ADD</a>
+                </div>
+              {% endif %}
+
+              <hr>
+
+              <div class="row">
+                  <div class="col-md-12">
+                      {% for company in latest_companies_list %}
+
+                      <a href="{% url 'gamesApp:company_detail' company.id 'html' %}">
+                        <center>
+                          <h4>
+                            {{ company.name }}
+                          </h4>
+                        </center>
+                      </a>
+                      {% empty %}<center><h4>Sorry, no companies registered yet</h4></center>
+                      {% endfor %}
+
+                  </div>
+              </div>
+
+          </div>
+      </div>
+
+    </div>
+</div>
 {% endblock %}

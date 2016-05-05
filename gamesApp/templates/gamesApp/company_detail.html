@@ -1,41 +1,70 @@
 {% extends "gamesApp/base.html" %}
 {% block content %}
-<h1>
-    {{ company.name }}
-    {% if user == company.user %}
-      (<a href="{% url 'gamesApp:company_edit' company.id %}">edit</a>)
-    {% endif %}
-</h1>
 
-<h2>Abbreviation:</h2>
-<p>
-    {{ company.abbreviation }}
-</p>
+<div class="container">
+    <div class="row">
 
-<h2>City:</h2>
-<p>
-    {{ company.city }}
-</p>
+      <div class="col-md-3">
+          <p class="lead">gamesApp</p>
+          <div class="list-group">
+              <a href="/" class="list-group-item">Home</a>
+              <a href="/gamesApp/companies.html" class="list-group-item active">Companies</a>
+              <a href="/gamesApp/platforms.html" class="list-group-item">Platforms</a>
+              <a href="/gamesApp/genres.html" class="list-group-item">Genres</a>
+              <a href="/gamesApp/games.html" class="list-group-item">Games</a>
+          </div>
+      </div>
 
-<h2>Mail:</h2>
-<p>
-    {{ company.mail }}
-</p>
+      <div class="col-md-9">
 
-<h2>Website:</h2>
-<p>
-    {{ company.website }}
-</p>
+          <div class="thumbnail">
+              <div class="caption-full">
+                  {% if user == company.user %}
+                    <div class="text-right">
+                        <a class="btn btn-success"
+                        href="{% url 'gamesApp:company_edit' company.id %}">
+                          EDIT</a>
+                    </div>
+                  {% endif %}
+                  <h1>{{ company.name }}</h1>
 
-<h2>Games</h2>
-<ul>
-    {% for game in company.games.all %}
-        <li>
-          <p><a href="{% url 'gamesApp:game_detail' game.id 'html' %}">
-            {{ game.name }} </a></p>
-        </li>
-    {% endfor %}
-</ul>
+                  <h3>Abbreviation:</h3>
+                  <p>
+                      {{ company.abbreviation }}
+                  </p>
 
-Created by {{ company.user }} on {{ company.date }}
+                  <h3>City:</h3>
+                  <p>
+                      {{ company.city }}
+                  </p>
+
+                  <h3>Mail:</h3>
+                  <p>
+                      {{ company.mail }}
+                  </p>
+
+                  <h3>Website:</h3>
+                  <p>
+                      {{ company.website }}
+                  </p>
+
+                  <h3>Games:</h3>
+                  <ul>
+                      {% for game in company.games.all %}
+                          <li>
+                              <p><a href="{% url 'gamesApp:game_detail' game.id 'html' %}">
+                                {{ game.name }} </a></p>
+                          </li>
+                      {% endfor %}
+                  </ul>
+
+                  <br/>
+                  <div class="text-right">
+                    Created by {{ company.user }} on {{ company.date }}
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

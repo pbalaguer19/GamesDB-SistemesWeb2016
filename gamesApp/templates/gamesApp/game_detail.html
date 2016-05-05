@@ -1,67 +1,108 @@
 {% extends "gamesApp/base.html" %}
 {% block content %}
-<h1>
-    {{ game.name }}
-    {% if user == game.user %}
-      (<a href="{% url 'gamesApp:game_edit' game.id %}">edit</a>)
-    {% endif %}
-</h1>
+<div class="container">
+    <div class="row">
 
-<h2>Description:</h2>
-<p>
-    {{ game.description }}
-</p>
+      <div class="col-md-3">
+          <p class="lead">gamesApp</p>
+          <div class="list-group">
+              <a href="/" class="list-group-item">Home</a>
+              <a href="/gamesApp/companies.html" class="list-group-item">Companies</a>
+              <a href="/gamesApp/platforms.html" class="list-group-item">Platforms</a>
+              <a href="/gamesApp/genres.html" class="list-group-item">Genres</a>
+              <a href="/gamesApp/games.html" class="list-group-item active">Games</a>
+          </div>
+      </div>
 
-<h2>Release year:</h2>
-<p>
-    {{ game.release_year }}
-</p>
+      <div class="col-md-9">
 
-<h2>Website:</h2>
-<p>
-    {{ game.website }}
-</p>
+          <div class="thumbnail">
+              <div class="caption-full">
+                  {% if user == game.user %}
+                    <div class="text-right">
+                        <a class="btn btn-success"
+                        href="{% url 'gamesApp:game_edit' game.id %}">
+                          EDIT</a>
+                    </div>
+                  {% endif %}
+                  <h1>{{ game.name }}</h1>
 
-<h2>Companies:</h2>
-<ul>
-    {% for company in game.companies.all %}
-        <li>
-            <p><a href="{% url 'gamesApp:company_detail' company.id 'html' %}">
-              {{ company.name }} </a></p>
-        </li>
-    {% endfor %}
-</ul>
+                  <h3>Description:</h3>
+                  <p>
+                      {{ game.description }}
+                  </p>
 
-<h2>Platforms:</h2>
-<ul>
-    {% for platform in game.platforms.all %}
-        <li>
-            <p><a href="{% url 'gamesApp:platform_detail' platform.id 'html' %}">
-              {{ platform.name }} </a></p>
-        </li>
-    {% endfor %}
-</ul>
+                  <h3>Release year:</h3>
+                  <p>
+                      {{ game.release_year }}
+                  </p>
 
-<h2>Genres:</h2>
-<ul>
-    {% for genre in game.genres.all %}
-        <li>
-            <p><a href="{% url 'gamesApp:genre_detail' genre.id 'html' %}">
-              {{ genre.name }} </a></p>
-        </li>
-    {% endfor %}
-</ul>
+                  <h3>Website:</h3>
+                  <p>
+                      {{ game.website }}
+                  </p>
 
-<h2>Reviews</h2>
-<ul>
-    {% for review in game.gamereview_set.all %}
-        <li>
-            <p>{{ review.rating }} star{{ review.rating|pluralize }}</p>
-            <p>{{ review.comment }}</p>
-            <p>Created by {{ review.user }} on {{ review.publish_date }}</p>
-        </li>
-    {% endfor %}
-</ul>
+                  <h3>Companies:</h3>
+                  <ul>
+                      {% for company in game.companies.all %}
+                          <li>
+                              <p><a href="{% url 'gamesApp:company_detail' company.id 'html' %}">
+                                {{ company.name }} </a></p>
+                          </li>
+                      {% endfor %}
+                  </ul>
 
-Created by {{ game.user }} on {{ game.date }}
+                  <h2>Platforms:</h2>
+                  <ul>
+                      {% for platform in game.platforms.all %}
+                          <li>
+                              <p><a href="{% url 'gamesApp:platform_detail' platform.id 'html' %}">
+                                {{ platform.name }} </a></p>
+                          </li>
+                      {% endfor %}
+                  </ul>
+
+                  <h2>Genres:</h2>
+                  <ul>
+                      {% for genre in game.genres.all %}
+                          <li>
+                              <p><a href="{% url 'gamesApp:genre_detail' genre.id 'html' %}">
+                                {{ genre.name }} </a></p>
+                          </li>
+                      {% endfor %}
+                  </ul>
+
+                  <br/>
+                  <div class="text-right">
+                    Created by {{ game.user }} on {{ game.date }}
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="well">
+              <div class="text-right">
+                  <a class="btn btn-success">Leave a Review</a>
+              </div>
+
+              <h3> Reviews </h3>
+              <hr>
+
+              {% for review in game.gamereview_set.all %}
+              <div class="row">
+                  <div class="col-md-12">
+                      <p>{{ review.rating }} star{{ review.rating|pluralize }}</p>
+                      <p>{{ review.comment }}</p>
+                      <span class="pull-right">
+                        Created by {{ review.user }} on {{ review.publish_date }}
+                      </span>
+                  </div>
+              </div>
+              <hr>
+              {% endfor %}
+
+          </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

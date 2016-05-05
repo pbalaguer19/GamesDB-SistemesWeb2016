@@ -1,26 +1,55 @@
 {% extends "gamesApp/base.html" %}
 {% block content %}
-<h1>
-    {{ genre.name }}
-    {% if user == genre.user %}
-      (<a href="{% url 'gamesApp:genre_edit' genre.id %}">edit</a>)
-    {% endif %}
-</h1>
 
-<h2>Description:</h2>
-<p>
-    {{ genre.description }}
-</p>
+<div class="container">
+    <div class="row">
 
-<h2>Games</h2>
-<ul>
-    {% for game in genre.games.all %}
-        <li>
-          <p><a href="{% url 'gamesApp:game_detail' game.id 'html' %}">
-            {{ game.name }} </a></p>
-        </li>
-    {% endfor %}
-</ul>
+      <div class="col-md-3">
+          <p class="lead">gamesApp</p>
+          <div class="list-group">
+              <a href="/" class="list-group-item">Home</a>
+              <a href="/gamesApp/companies.html" class="list-group-item">Companies</a>
+              <a href="/gamesApp/platforms.html" class="list-group-item">Platforms</a>
+              <a href="/gamesApp/genres.html" class="list-group-item active">Genres</a>
+              <a href="/gamesApp/games.html" class="list-group-item">Games</a>
+          </div>
+      </div>
 
-Created by {{ genre.user }} on {{ genre.date }}
+      <div class="col-md-9">
+
+          <div class="thumbnail">
+              <div class="caption-full">
+                  {% if user == genre.user %}
+                    <div class="text-right">
+                        <a class="btn btn-success"
+                        href="{% url 'gamesApp:genre_edit' genre.id %}">
+                          EDIT</a>
+                    </div>
+                  {% endif %}
+                  <h1>{{ genre.name }}</h1>
+
+                  <h3>Description:</h3>
+                  <p>
+                      {{ genre.description }}
+                  </p>
+
+                  <h3>Games:</h3>
+                  <ul>
+                      {% for game in genre.games.all %}
+                          <li>
+                              <p><a href="{% url 'gamesApp:game_detail' game.id 'html' %}">
+                                {{ game.name }} </a></p>
+                          </li>
+                      {% endfor %}
+                  </ul>
+
+                  <br/>
+                  <div class="text-right">
+                    Created by {{ genre.user }} on {{ genre.date }}
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

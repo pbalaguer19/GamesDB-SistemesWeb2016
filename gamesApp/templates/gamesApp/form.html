@@ -28,28 +28,21 @@
                 api_key: "d4743cd79187148e85372f03179b38b884dbc9ac",
                 format: "jsonp",
                 resources: "company",
-                field_list: "abbreviation,name",
-                limit: "5"
+                field_list: "name, abbreviation, location_country, location_city, website",
+                limit: "10"
               },
               success: function(data) {
-                if(data.length == 0){
-                  var result = [
-                    {
-                      label: "No s'han trobat resultats",
-                      value: response.term
-                    }
-                  ];
-                  response(result)
-                }
-                else{
                   response( $.map(data.results, function(item) {
                     return {
                       label: item.name,
                       value: item.name,
-                      name: item.name
+                      name: item.name,
+                      abbreviation: item.abbreviation,
+                      country: item.location_country,
+                      city: item.location_city,
+                      website: item.website
                     }
                   }));
-                }
               }
             });
           },
@@ -57,8 +50,10 @@
           select: function( event, ui ) {
             if (ui.item) {
               $("#id_name").val(ui.item.name);
-              $("#id_city").val(ui.item.name);
-              //$("#id_mail").val("hola");
+              $("#id_abbreviation").val(ui.item.abbreviation);
+              $("#id_country").val(ui.item.country);
+              $("#id_city").val(ui.item.city);
+              $("#id_website").val(ui.item.website);
             }
           }
         });

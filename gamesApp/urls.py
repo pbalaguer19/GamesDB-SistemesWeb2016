@@ -59,7 +59,7 @@ urlpatterns = patterns('',
     url(r'^platforms/(?P<pk>\d+)/edit/$',
         UpdateView.as_view(
             model=Platform,
-            template_name='gamesApp/form.html',
+            template_name='gamesApp/platform_form.html',
             form_class=PlatformForm),
         name='platform_edit'),
 

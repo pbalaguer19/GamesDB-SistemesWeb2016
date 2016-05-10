@@ -93,7 +93,7 @@ class GenreDetail(DetailView, ConnegResponseMixin):
 
 class GenreCreate(CreateView):
     model = Genre
-    template_name = 'gamesApp/form.html'
+    template_name = 'gamesApp/genre_form.html'
     form_class = GenreForm
 
     def form_valid(self, form):

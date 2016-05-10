@@ -5,9 +5,9 @@
 
 <script>
         $(function() {
-            $.getJSON("{% static "platforms.json" %}", {}, function (platforms){
+            $.getJSON("{% static "genres.json" %}", {}, function (genres){
                 $("#id_name").autocomplete({
-                    source: platforms
+                    source: genres
                 });
             });
         });

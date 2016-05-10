@@ -82,7 +82,7 @@ urlpatterns = patterns('',
     url(r'^genres/(?P<pk>\d+)/edit/$',
         UpdateView.as_view(
             model=Genre,
-            template_name='gamesApp/form.html',
+            template_name='gamesApp/genre_form.html',
             form_class=GenreForm),
         name='genre_edit'),
 

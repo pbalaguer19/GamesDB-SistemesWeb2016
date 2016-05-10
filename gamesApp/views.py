@@ -71,7 +71,7 @@ class PlatformDetail(DetailView, ConnegResponseMixin):
 
 class PlatformCreate(CreateView):
     model = Platform
-    template_name = 'gamesApp/form.html'
+    template_name = 'gamesApp/platform_form.html'
     form_class = PlatformForm
 
     def form_valid(self, form):
@@ -115,7 +115,7 @@ class GameDetail(DetailView, ConnegResponseMixin):
 
 class GameCreate(CreateView):
     model = Game
-    template_name = 'gamesApp/form.html'
+    template_name = 'gamesApp/game_form.html'
     form_class = GameForm
 
     def form_valid(self, form):

@@ -4,51 +4,12 @@
 {% block content %}
 
 <script>
-  $(function() {
-        $.getJSON("{% static "countries.json" %}", {}, function (countries) {
-            $("#id_country").autocomplete({
-                source: countries
+        $(function() {
+            $.getJSON("{% static "platforms.json" %}", {}, function (platforms)) {
+                $("#id_name").autocomplete({
+                    source: platforms
+                });
             });
-        });
-
-        $("#id_name").autocomplete({
-          source: function(request, response) {
-            $.ajax({
-              url: "http://www.giantbomb.com/api/search",
-              dataType: "jsonp",
-              jsonp: "json_callback",
-              crossDomain: "true",
-              data: {
-                query: request.term,
-                api_key: "d4743cd79187148e85372f03179b38b884dbc9ac",
-                format: "jsonp",
-                resources: "platform",
-                field_list: "name,original_price,release_date",
-                limit: "10"
-              },
-              success: function(data) {
-                  response( $.map(data.results, function(item) {
-                    return {
-                      label: item.name,
-                      value: item.name,
-                      name: item.name,
-                      price: item.original_price,
-                      release_year: item.release_date
-                    }
-                  }));
-              }
-            });
-          },
-          minLength: 2,
-          select: function( event, ui ) {
-            if (ui.item) {
-              $("#id_name").val(ui.item.name);
-              $("#id_price").val(ui.item.price);
-              $("#id_release_year").val(ui.item.release_year);
-            }
-          }
-        });
-    });
 </script>
 
 <form method="post" enctype="multipart/form-data" action="">
@@ -56,7 +17,7 @@
     <table>
         {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit"/>
+    <button type="submit" class="btn btn-success"> <b> SUBMIT </b> </button>
 </form>
 
 {% endblock %}

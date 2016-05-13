@@ -10,6 +10,7 @@ from django.views.generic.edit import CreateView
 
 from models import Company, Platform, Genre, Game
 from forms import CompanyForm, PlatformForm, GenreForm, GameForm
+from serializers import GamesSerializer
 
 
 class ConnegResponseMixin(TemplateResponseMixin):
@@ -121,3 +122,21 @@ class GameCreate(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(GameCreate, self).form_valid(form)
+
+#*********** RESTful ***********#
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # Instance must have an attribute named `owner`.
+        return obj.user == request.user
+
+class APIGameList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Game
+    queryset = Game.objects.all()
+    serializer_class = GamesSerializer

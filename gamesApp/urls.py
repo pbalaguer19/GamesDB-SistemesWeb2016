@@ -7,7 +7,8 @@ from models import Company, Platform, Genre, Game
 from views import CompanyList, CompanyDetail, CompanyCreate,\
                 PlatformsList, PlatformDetail, PlatformCreate,\
                 GenresList,GenreDetail, GenreCreate, \
-                GamesList, GameDetail, GameCreate
+                GamesList, GameDetail, GameCreate, \
+                APIGameList
 from forms import CompanyForm, PlatformForm, GenreForm, GameForm
 
 urlpatterns = patterns('',
@@ -108,4 +109,11 @@ urlpatterns = patterns('',
             template_name='gamesApp/game_form.html',
             form_class=GameForm),
         name='game_edit'),
+
+    # RESTful API
+    url(r'^api/$', 'api_root'),
+    url(r'^api/auth/',
+        include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/games/$',
+        APIGameList.as_view(), name='game-list'),
 )

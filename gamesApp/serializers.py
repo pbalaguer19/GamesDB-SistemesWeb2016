@@ -5,12 +5,12 @@ from models import Game, Company, Platform, Genre, GameReview
 
 
 class GamesSerializer(HyperlinkedModelSerializer):
-    uri = HyperlinkedIdentityField(view_name='gamesApp:game_detail')
-    companies = HyperlinkedRelatedField(many=True, read_only=True, view_name='gamesApp:company_detail')
-    platforms = HyperlinkedRelatedField(many=True, read_only=True, view_name='gamesApp:platform_detail')
-    genres = HyperlinkedRelatedField(many=True, read_only=True, view_name='gamesApp:genre_detail')
+    uri = HyperlinkedIdentityField(view_name='gamesApp:game-detail')
+    companies = HyperlinkedRelatedField(many=True, read_only=True, view_name='gamesApp:company-detail')
+    platforms = HyperlinkedRelatedField(many=True, read_only=True, view_name='gamesApp:platform-detail')
+    genres = HyperlinkedRelatedField(many=True, read_only=True, view_name='gamesApp:genre-detail')
     gamereview_set = HyperlinkedRelatedField(many=True, read_only=True,
-                                                   view_name='gamesApp:gamereview_detail')
+                                                   view_name='gamesApp:gamereview-detail')
     user = CharField(read_only=True)
 
     class Meta:
@@ -19,8 +19,8 @@ class GamesSerializer(HyperlinkedModelSerializer):
                   'genres', 'user', 'date', 'gamereview_set')
 
 class CompanySerializer(HyperlinkedModelSerializer):
-    uri = HyperlinkedIdentityField(view_name='gamesApp:company_detail')
-    games = HyperlinkedRelatedField(many=True, view_name='gamesApp:game_detail', read_only=True)
+    uri = HyperlinkedIdentityField(view_name='gamesApp:company-detail')
+    games = HyperlinkedRelatedField(many=True, view_name='gamesApp:game-detail', read_only=True)
     user = CharField(read_only=True)
 
     class Meta:
@@ -29,8 +29,8 @@ class CompanySerializer(HyperlinkedModelSerializer):
         'user', 'date', 'games')
 
 class PlatformSerializer(HyperlinkedModelSerializer):
-    uri = HyperlinkedIdentityField(view_name='gamesApp:platform_detail')
-    games = HyperlinkedRelatedField(many=True, view_name='gamesApp:game_detail', read_only=True)
+    uri = HyperlinkedIdentityField(view_name='gamesApp:platform-detail')
+    games = HyperlinkedRelatedField(many=True, view_name='gamesApp:game-detail', read_only=True)
     user = CharField(read_only=True)
 
     class Meta:
@@ -38,8 +38,8 @@ class PlatformSerializer(HyperlinkedModelSerializer):
         fields = ('uri', 'name', 'price', 'release_year', 'user', 'date', 'games')
 
 class GenreSerializer(HyperlinkedModelSerializer):
-    uri = HyperlinkedIdentityField(view_name='gamesApp:genre_detail')
-    games = HyperlinkedRelatedField(many=True, view_name='gamesApp:game_detail', read_only=True)
+    uri = HyperlinkedIdentityField(view_name='gamesApp:genre-detail')
+    games = HyperlinkedRelatedField(many=True, view_name='gamesApp:game-detail', read_only=True)
     user = CharField(read_only=True)
 
     class Meta:
@@ -48,8 +48,8 @@ class GenreSerializer(HyperlinkedModelSerializer):
 
 
 class GameReviewSerializer(HyperlinkedModelSerializer):
-    uri = HyperlinkedIdentityField(view_name='gamesApp:gamereview_detail')
-    game = HyperlinkedRelatedField(view_name='gamesApp:game_detail', read_only=True)
+    uri = HyperlinkedIdentityField(view_name='gamesApp:gamereview-detail')
+    game = HyperlinkedRelatedField(view_name='gamesApp:game-detail', read_only=True)
     user = CharField(read_only=True)
 
     class Meta:

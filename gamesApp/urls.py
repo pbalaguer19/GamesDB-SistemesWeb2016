@@ -6,10 +6,10 @@ from django.views.generic.base import TemplateView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from models import Company, Platform, Genre, Game
-from views import CompanyList, CompanyDetail, CompanyCreate,\
-                PlatformsList, PlatformDetail, PlatformCreate,\
-                GenresList,GenreDetail, GenreCreate, \
-                GamesList, GameDetail, GameCreate, \
+from views import CompanyList, CompanyDetail, CompanyCreate, CompanyEdit, \
+                PlatformsList, PlatformDetail, PlatformCreate, PlatformEdit, \
+                GenresList,GenreDetail, GenreCreate, GenreEdit, \
+                GamesList, GameDetail, GameCreate, GameEdit, review, \
                 APIGameList, APIGameReviewDetail, APIGameDetail, \
                 APICompanyList, APICompanyDetail, APIPlatformList, \
                 APIPlatformDetail, APIGenreList, APIGameReviewList, APIGenreDetail
@@ -39,9 +39,8 @@ urlpatterns = patterns('',
 
     # Edit Company
     url(r'^companies/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        CompanyEdit.as_view(
             model=Company,
-            template_name='gamesApp/company_form.html',
             form_class=CompanyForm),
         name='company_edit'),
 
@@ -62,9 +61,8 @@ urlpatterns = patterns('',
 
     # Edit Platform
     url(r'^platforms/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        PlatformEdit.as_view(
             model=Platform,
-            template_name='gamesApp/platform_form.html',
             form_class=PlatformForm),
         name='platform_edit'),
 
@@ -85,9 +83,8 @@ urlpatterns = patterns('',
 
     # Edit Genre
     url(r'^genres/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        GenreEdit.as_view(
             model=Genre,
-            template_name='gamesApp/genre_form.html',
             form_class=GenreForm),
         name='genre_edit'),
 
@@ -108,11 +105,15 @@ urlpatterns = patterns('',
 
     # Edit Game
     url(r'^games/(?P<pk>\d+)/edit/$',
-        UpdateView.as_view(
+        GameEdit.as_view(
             model=Game,
-            template_name='gamesApp/game_form.html',
             form_class=GameForm),
         name='game_edit'),
+
+    # Create Review Game
+     url(r'^games/(?P<pk>\d+)/reviews/create/$',
+        review,
+        name='review_create'),
 
     # RESTful API
 
@@ -122,29 +123,29 @@ urlpatterns = patterns('',
         include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^api/games/$',
-        APIGameList.as_view(), name='game_list'),
+        APIGameList.as_view(), name='game-list'),
     url(r'^api/games/(?P<pk>\d+)/$',
-        APIGameDetail.as_view(), name='game_detail'),
+        APIGameDetail.as_view(), name='game-detail'),
 
     url(r'^api/companies/$',
-        APICompanyList.as_view(), name='companies_list'),
+        APICompanyList.as_view(), name='companies-list'),
     url(r'^api/companies/(?P<pk>\d+)/$',
-        APICompanyDetail.as_view(), name='company_detail'),
+        APICompanyDetail.as_view(), name='company-detail'),
 
     url(r'^api/platforms/$',
-        APIPlatformList.as_view(), name='platforms_list'),
+        APIPlatformList.as_view(), name='platforms-list'),
     url(r'^api/platforms/(?P<pk>\d+)/$',
-        APIPlatformDetail.as_view(), name='platform_detail'),
+        APIPlatformDetail.as_view(), name='platform-detail'),
 
     url(r'^api/genres/$',
-        APIGenreList.as_view(), name='genres_list'),
+        APIGenreList.as_view(), name='genres-list'),
     url(r'^api/genres/(?P<pk>\d+)/$',
-        APIGenreDetail.as_view(), name='genre_detail'),
+        APIGenreDetail.as_view(), name='genre-detail'),
 
     url(r'^api/gamereviews/$',
-        APIGameReviewList.as_view(), name='gamereview_list'),
+        APIGameReviewList.as_view(), name='gamereview-list'),
     url(r'^api/gamereviews/(?P<pk>\d+)/$',
-        APIGameReviewDetail.as_view(), name='gamereview_detail'),
+        APIGameReviewDetail.as_view(), name='gamereview-detail'),
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api','json', 'xml'])

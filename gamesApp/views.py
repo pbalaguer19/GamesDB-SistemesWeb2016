@@ -40,6 +40,20 @@ class ConnegResponseMixin(TemplateResponseMixin):
                 return self.render_xml_object_response(objects=objects)
         return super(ConnegResponseMixin, self).render_to_response(context)
 
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+class CheckIsOwnerMixin(object):
+    def get_object(self, *args, **kwargs):
+        obj = super(CheckIsOwnerMixin, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise PermissionDenied
+        return obj
+
+### COMPANY ###
 class CompanyList(ListView, ConnegResponseMixin):
     model = Company
     template_name = 'gamesApp/companies_list.html'
@@ -53,7 +67,7 @@ class CompanyDetail(DetailView, ConnegResponseMixin):
         context = super(CompanyDetail, self).get_context_data(**kwargs)
         return context
 
-class CompanyCreate(CreateView):
+class CompanyCreate(LoginRequiredMixin, CreateView):
     model = Company
     template_name = 'gamesApp/company_form.html'
     form_class = CompanyForm
@@ -62,6 +76,10 @@ class CompanyCreate(CreateView):
         form.instance.user = self.request.user
         return super(CompanyCreate, self).form_valid(form)
 
+class CompanyEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'gamesApp/company_form.html'
+
+### PLATFORM ###
 class PlatformsList(ListView, ConnegResponseMixin):
     model = Platform
     template_name = 'gamesApp/platforms_list.html'
@@ -75,7 +93,7 @@ class PlatformDetail(DetailView, ConnegResponseMixin):
         context = super(PlatformDetail, self).get_context_data(**kwargs)
         return context
 
-class PlatformCreate(CreateView):
+class PlatformCreate(LoginRequiredMixin, CreateView):
     model = Platform
     template_name = 'gamesApp/platform_form.html'
     form_class = PlatformForm
@@ -84,6 +102,10 @@ class PlatformCreate(CreateView):
         form.instance.user = self.request.user
         return super(PlatformCreate, self).form_valid(form)
 
+class PlatformEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'gamesApp/platform_form.html'
+
+### GENRE ###
 class GenresList(ListView, ConnegResponseMixin):
     model = Genre
     template_name = 'gamesApp/genres_list.html'
@@ -97,7 +119,7 @@ class GenreDetail(DetailView, ConnegResponseMixin):
         context = super(GenreDetail, self).get_context_data(**kwargs)
         return context
 
-class GenreCreate(CreateView):
+class GenreCreate(LoginRequiredMixin, CreateView):
     model = Genre
     template_name = 'gamesApp/genre_form.html'
     form_class = GenreForm
@@ -106,6 +128,10 @@ class GenreCreate(CreateView):
         form.instance.user = self.request.user
         return super(GenreCreate, self).form_valid(form)
 
+class GenreEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'gamesApp/genre_form.html'
+
+### GAME ###
 class GamesList(ListView, ConnegResponseMixin):
     model = Game
     template_name = 'gamesApp/games_list.html'
@@ -119,7 +145,7 @@ class GameDetail(DetailView, ConnegResponseMixin):
         context = super(GameDetail, self).get_context_data(**kwargs)
         return context
 
-class GameCreate(CreateView):
+class GameCreate(LoginRequiredMixin, CreateView):
     model = Game
     template_name = 'gamesApp/game_form.html'
     form_class = GameForm
@@ -128,8 +154,22 @@ class GameCreate(CreateView):
         form.instance.user = self.request.user
         return super(GameCreate, self).form_valid(form)
 
-#*********** RESTful ***********#
+class GameEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
+    template_name = 'gamesApp/game_form.html'
 
+### REVIEWS ###
+@login_required()
+def review(request, pk):
+    game = get_object_or_404(Game, pk=pk)
+    review = GameReview(
+        rating=request.POST['rating'],
+        comment=request.POST['comment'],
+        user=request.user,
+        game=game)
+    review.save()
+    return HttpResponseRedirect(reverse('gamesApp:game_detail', args=(game.id,)))
+
+### RESTFul API ###
 class IsOwnerOrReadOnly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):

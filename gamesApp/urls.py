@@ -1,14 +1,18 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.base import TemplateView
+
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from models import Company, Platform, Genre, Game
 from views import CompanyList, CompanyDetail, CompanyCreate,\
                 PlatformsList, PlatformDetail, PlatformCreate,\
                 GenresList,GenreDetail, GenreCreate, \
                 GamesList, GameDetail, GameCreate, \
-                APIGameList
+                APIGameList, APIGameReviewDetail, APIGameDetail, \
+                APICompanyList, APICompanyDetail, APIPlatformList, \
+                APIPlatformDetail, APIGenreList, APIGameReviewList, APIGenreDetail
 from forms import CompanyForm, PlatformForm, GenreForm, GameForm
 
 urlpatterns = patterns('',
@@ -111,9 +115,36 @@ urlpatterns = patterns('',
         name='game_edit'),
 
     # RESTful API
-    url(r'^api/$', 'api_root'),
+
+    # Auth?
+    # login_required
     url(r'^api/auth/',
         include('rest_framework.urls', namespace='rest_framework')),
+
     url(r'^api/games/$',
-        APIGameList.as_view(), name='game-list'),
+        APIGameList.as_view(), name='game_list'),
+    url(r'^api/games/(?P<pk>\d+)/$',
+        APIGameDetail.as_view(), name='game_detail'),
+
+    url(r'^api/companies/$',
+        APICompanyList.as_view(), name='companies_list'),
+    url(r'^api/companies/(?P<pk>\d+)/$',
+        APICompanyDetail.as_view(), name='company_detail'),
+
+    url(r'^api/platforms/$',
+        APIPlatformList.as_view(), name='platforms_list'),
+    url(r'^api/platforms/(?P<pk>\d+)/$',
+        APIPlatformDetail.as_view(), name='platform_detail'),
+
+    url(r'^api/genres/$',
+        APIGenreList.as_view(), name='genres_list'),
+    url(r'^api/genres/(?P<pk>\d+)/$',
+        APIGenreDetail.as_view(), name='genre_detail'),
+
+    url(r'^api/gamereviews/$',
+        APIGameReviewList.as_view(), name='gamereview_list'),
+    url(r'^api/gamereviews/(?P<pk>\d+)/$',
+        APIGameReviewDetail.as_view(), name='gamereview_detail'),
 )
+
+urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api','json', 'xml'])

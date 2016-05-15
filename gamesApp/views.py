@@ -1,16 +1,21 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.utils import timezone
 from django.core import serializers
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
-from models import Company, Platform, Genre, Game
+from rest_framework import generics, permissions
+
+from models import Company, Platform, Genre, Game, GameReview
 from forms import CompanyForm, PlatformForm, GenreForm, GameForm
-from serializers import GamesSerializer
+from serializers import GamesSerializer, CompanySerializer, PlatformSerializer, \
+                    GenreSerializer, GameReviewSerializer
 
 
 class ConnegResponseMixin(TemplateResponseMixin):
@@ -140,3 +145,57 @@ class APIGameList(generics.ListCreateAPIView):
     model = Game
     queryset = Game.objects.all()
     serializer_class = GamesSerializer
+
+class APIGameDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Game
+    queryset = Game.objects.all()
+    serializer_class = GamesSerializer
+
+class APICompanyList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Company
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+class APICompanyDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Company
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+class APIPlatformList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Platform
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
+
+class APIPlatformDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Platform
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
+
+class APIGenreList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Genre
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+class APIGenreDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = Genre
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+class APIGameReviewList(generics.ListCreateAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = GameReview
+    queryset = GameReview.objects.all()
+    serializer_class = GameReviewSerializer
+
+class APIGameReviewDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsOwnerOrReadOnly,)
+    model = GameReview
+    queryset = GameReview.objects.all()
+    serializer_class = GameReviewSerializer

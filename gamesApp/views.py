@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from rest_framework import generics, permissions
 
@@ -156,6 +156,12 @@ class GameCreate(LoginRequiredMixin, CreateView):
 
 class GameEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name = 'gamesApp/game_form.html'
+
+class GameDelete(DeleteView):
+    model = Game
+    template_name = 'gamesApp/delete_form.html'
+    success_url = '/gamesApp/games.html'
+    success_message='Your Game has been deleted.'
 
 ### REVIEWS ###
 @login_required()

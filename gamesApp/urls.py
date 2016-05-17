@@ -9,7 +9,7 @@ from models import Company, Platform, Genre, Game
 from views import CompanyList, CompanyDetail, CompanyCreate, CompanyEdit, \
                 PlatformsList, PlatformDetail, PlatformCreate, PlatformEdit, \
                 GenresList,GenreDetail, GenreCreate, GenreEdit, \
-                GamesList, GameDetail, GameCreate, GameEdit, review, \
+                GamesList, GameDetail, GameCreate, GameEdit, GameDelete,review, \
                 APIGameList, APIGameReviewDetail, APIGameDetail, \
                 APICompanyList, APICompanyDetail, APIPlatformList, \
                 APIPlatformDetail, APIGenreList, APIGameReviewList, APIGenreDetail
@@ -110,15 +110,16 @@ urlpatterns = patterns('',
             form_class=GameForm),
         name='game_edit'),
 
+    url(r'^games/(?P<pk>\d+)/delete/$',
+        GameDelete.as_view(),
+        name='game_delete'),
+
     # Create Review Game
      url(r'^games/(?P<pk>\d+)/reviews/create/$',
         review,
         name='review_create'),
 
     # RESTful API
-
-    # Auth?
-    # login_required
     url(r'^api/auth/',
         include('rest_framework.urls', namespace='rest_framework')),
 

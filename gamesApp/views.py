@@ -181,7 +181,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return obj.user == request.user
 
 class APIGameList(generics.ListCreateAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     model = Game
     queryset = Game.objects.all()
     serializer_class = GamesSerializer
@@ -193,7 +193,7 @@ class APIGameDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GamesSerializer
 
 class APICompanyList(generics.ListCreateAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     model = Company
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
@@ -205,7 +205,7 @@ class APICompanyDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CompanySerializer
 
 class APIPlatformList(generics.ListCreateAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     model = Platform
     queryset = Platform.objects.all()
     serializer_class = PlatformSerializer
@@ -217,7 +217,7 @@ class APIPlatformDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlatformSerializer
 
 class APIGenreList(generics.ListCreateAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     model = Genre
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
@@ -229,7 +229,7 @@ class APIGenreDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GenreSerializer
 
 class APIGameReviewList(generics.ListCreateAPIView):
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     model = GameReview
     queryset = GameReview.objects.all()
     serializer_class = GameReviewSerializer

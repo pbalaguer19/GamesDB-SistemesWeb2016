@@ -97,33 +97,34 @@
               </div>
               <hr>
               {% endfor %}
-
-              <h3> Add a Review </h3>
-              <hr>
-                <form action="{% url 'gamesApp:review_create' game.id %}" method="post">
-                  {% csrf_token %}
-                  Message: <textarea name="comment" id="comment" rows="4"></textarea>
-                  <p>Rating:</p>
-                  <p>
-                    <input type="radio" name="rating" id="rating1" value="1" />
-                    <label for="choice1">1 star</label>
-                    <br/>
-                    <input type="radio" name="rating" id="rating2" value="2" />
-                    <label for="choice2">2 stars</label>
-                    <br/>
-                    <input type="radio" name="rating" id="rating3" value="3" />
-                    <label for="choice3">3 stars</label>
-                    <br/>
-                    <input type="radio" name="rating" id="rating4" value="4" />
-                    <label for="choice4">4 stars</label>
-                    <br/>
-                    <input type="radio" name="rating" id="rating5" value="5" />
-                    <label for="choice5">5 stars</label>
-                    <br/>
-                  </p>
-                  <button type="submit" class="btn btn-success"> <b> Leave a Review </b> </button>
-              </form>
-            </hr>
+                {% if user.username %}
+                <h3> Add a Review </h3>
+                <hr>
+                  <form action="{% url 'gamesApp:review_create' game.id %}" method="post">
+                    {% csrf_token %}
+                    Message: <textarea name="comment" id="comment" rows="4"></textarea>
+                    <p>Rating:</p>
+                    <p>
+                      <input type="radio" name="rating" id="rating1" value="1" />
+                      <label for="choice1">1 star</label>
+                      <br/>
+                      <input type="radio" name="rating" id="rating2" value="2" />
+                      <label for="choice2">2 stars</label>
+                      <br/>
+                      <input type="radio" name="rating" id="rating3" value="3" />
+                      <label for="choice3">3 stars</label>
+                      <br/>
+                      <input type="radio" name="rating" id="rating4" value="4" />
+                      <label for="choice4">4 stars</label>
+                      <br/>
+                      <input type="radio" name="rating" id="rating5" value="5" />
+                      <label for="choice5">5 stars</label>
+                      <br/>
+                    </p>
+                    <button type="submit" class="btn btn-success"> <b> Leave a Review </b> </button>
+                </form>
+              </hr>
+            {% endif %}
           </div>
         </div>
     </div>

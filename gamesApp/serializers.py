@@ -59,4 +59,4 @@ class GameReviewSerializer(HyperlinkedModelSerializer):
 
     class Meta:
         model = GameReview
-        fields = ('uri', 'rating', 'comment', 'user', 'publish_date', 'game')
+        fields = ('uri', 'rating', 'comment', 'user', 'date', 'game')

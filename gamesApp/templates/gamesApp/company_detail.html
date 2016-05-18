@@ -24,6 +24,9 @@
                         <a class="btn btn-success"
                         href="{% url 'gamesApp:company_edit' company.id %}">
                           EDIT</a>
+                        <a class="btn btn-danger"
+                        href="{% url 'gamesApp:game_delete' game.id %}">
+                          DELETE</a>
                     </div>
                   {% endif %}
                   <h1>{{ company.name }}</h1>

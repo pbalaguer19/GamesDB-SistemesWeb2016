@@ -29,7 +29,7 @@
               success: function(data) {
                   response( $.map(data.results, function(item) {
                     return {
-                      label: item.name,
+                      label: item.name + ", " + item.original_release_date.substring(0,4),
                       value: item.name,
                       name: item.name,
                       deck: item.deck,

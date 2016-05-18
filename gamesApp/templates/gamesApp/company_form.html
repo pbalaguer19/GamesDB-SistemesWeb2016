@@ -29,7 +29,7 @@
               success: function(data) {
                   response( $.map(data.results, function(item) {
                     return {
-                      label: item.name,
+                      label: item.name + ", " + item.location_country,
                       value: item.name,
                       name: item.name,
                       abbreviation: item.abbreviation,

@@ -1,7 +1,14 @@
 {% extends "gamesApp/base.html" %}
 {% block content %}
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+
 <form action="" method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ object }}"?</p>
     <input type="submit" value="Confirm" />
+    <button onclick="goBack()" type="button"> <b> Cancel </b> </button>
 </form>
 {% endblock %}

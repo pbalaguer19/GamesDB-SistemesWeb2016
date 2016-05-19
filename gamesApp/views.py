@@ -79,6 +79,12 @@ class CompanyCreate(LoginRequiredMixin, CreateView):
 class CompanyEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name = 'gamesApp/company_form.html'
 
+class CompanyDelete(DeleteView):
+    model = Company
+    template_name = 'gamesApp/delete_form.html'
+    success_url = '/gamesApp/companies.html'
+    success_message='Your Company has been deleted.'
+
 ### PLATFORM ###
 class PlatformsList(ListView, ConnegResponseMixin):
     model = Platform
@@ -105,6 +111,12 @@ class PlatformCreate(LoginRequiredMixin, CreateView):
 class PlatformEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name = 'gamesApp/platform_form.html'
 
+class PlatformDelete(DeleteView):
+    model = Platform
+    template_name = 'gamesApp/delete_form.html'
+    success_url = '/gamesApp/platforms.html'
+    success_message='Your Platform has been deleted.'
+
 ### GENRE ###
 class GenresList(ListView, ConnegResponseMixin):
     model = Genre
@@ -130,6 +142,12 @@ class GenreCreate(LoginRequiredMixin, CreateView):
 
 class GenreEdit(LoginRequiredMixin, CheckIsOwnerMixin, UpdateView):
     template_name = 'gamesApp/genre_form.html'
+
+class GenreDelete(DeleteView):
+    model = Genre
+    template_name = 'gamesApp/delete_form.html'
+    success_url = '/gamesApp/genres.html'
+    success_message='Your Genre has been deleted.'
 
 ### GAME ###
 class GamesList(ListView, ConnegResponseMixin):

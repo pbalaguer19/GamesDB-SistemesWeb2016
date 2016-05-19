@@ -7,8 +7,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 from models import Company, Platform, Genre, Game
 from views import CompanyList, CompanyDetail, CompanyCreate, CompanyEdit, \
+                CompanyDelete, \
                 PlatformsList, PlatformDetail, PlatformCreate, PlatformEdit, \
-                GenresList,GenreDetail, GenreCreate, GenreEdit, \
+                PlatformDelete, \
+                GenresList,GenreDetail, GenreCreate, GenreEdit, GenreDelete, \
                 GamesList, GameDetail, GameCreate, GameEdit, GameDelete,review, \
                 APIGameList, APIGameReviewDetail, APIGameDetail, \
                 APICompanyList, APICompanyDetail, APIPlatformList, \
@@ -44,6 +46,11 @@ urlpatterns = patterns('',
             form_class=CompanyForm),
         name='company_edit'),
 
+    #Delete Company
+    url(r'^companies/(?P<pk>\d+)/delete/$',
+        CompanyDelete.as_view(),
+        name='company_delete'),
+
     # Platforms list
     url(r'^platforms\.(?P<extension>(json|xml|html))?$',
         PlatformsList.as_view(),
@@ -65,6 +72,11 @@ urlpatterns = patterns('',
             model=Platform,
             form_class=PlatformForm),
         name='platform_edit'),
+
+    #Delete Platform
+    url(r'^platforms/(?P<pk>\d+)/delete/$',
+        PlatformDelete.as_view(),
+        name='platform_delete'),
 
     # Genres list
     url(r'^genres\.(?P<extension>(json|xml|html))?$',
@@ -88,6 +100,11 @@ urlpatterns = patterns('',
             form_class=GenreForm),
         name='genre_edit'),
 
+    #Delete Genre
+    url(r'^genres/(?P<pk>\d+)/delete/$',
+        GenreDelete.as_view(),
+        name='genre_delete'),
+
     # Games list
     url(r'^games\.(?P<extension>(json|xml|html))?$',
         GamesList.as_view(),
@@ -110,6 +127,7 @@ urlpatterns = patterns('',
             form_class=GameForm),
         name='game_edit'),
 
+    #Delete Game
     url(r'^games/(?P<pk>\d+)/delete/$',
         GameDelete.as_view(),
         name='game_delete'),

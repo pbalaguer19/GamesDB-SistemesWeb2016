@@ -1,4 +1,4 @@
-from django.db import models 
+from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from datetime import date
@@ -68,6 +68,10 @@ class Game(models.Model):
         return u"%s" % self.name
     def get_absolute_url(self):
         return reverse('gamesApp:game_detail', kwargs={'pk': self.pk})
+    def averageRating(self):
+        ratingSum = sum([float(review.rating) for review in self.gamereview_set.all()])
+        reviewCount = self.gamereview_set.count()
+        return ratingSum / reviewCount
 
 class GameReview(Review):
     game = models.ForeignKey(Game)

@@ -17,8 +17,7 @@ from views import CompanyList, CompanyDetail, CompanyCreate, CompanyEdit, \
                 APIPlatformDetail, APIGenreList, APIGameReviewList, APIGenreDetail
 from forms import CompanyForm, PlatformForm, GenreForm, GameForm
 
-urlpatterns = patterns('',
-
+urlpatterns = [
     # Home page
     url(r'^$',
         TemplateView.as_view(template_name="gamesApp/main.html"),
@@ -165,6 +164,6 @@ urlpatterns = patterns('',
         APIGameReviewList.as_view(), name='gamereview-list'),
     url(r'^api/gamereviews/(?P<pk>\d+)/$',
         APIGameReviewDetail.as_view(), name='gamereview-detail'),
-)
+]
 
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['api','json', 'xml'])

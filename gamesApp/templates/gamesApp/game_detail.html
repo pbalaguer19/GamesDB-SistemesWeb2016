@@ -31,7 +31,7 @@
                   {% endif %}
                   </div>
                   <!--<span vocab="http://schema.org/" typeof="VideoGame">-->
-                  <div itemscope itemtype="http://schema.org/VideoGame">
+                  <span itemscope itemtype="http://schema.org/VideoGame">
                   <h1>
                     <div itemprop="name">{{ game.name }}</div>
                     <!--<span property="name">{{ game.name }}</span>-->
@@ -39,25 +39,34 @@
 
                   <h3>Description:</h3>
                   <p>
+                    <div itemprop="description">
                       {{ game.description }}
+                    </div>
                   </p>
 
                   <h3>Release year:</h3>
                   <p>
+                    <div itemprop="copyrightYear">
                       {{ game.release_year }}
+                    </div>
                   </p>
 
                   <h3>Website:</h3>
                   <p>
+                    <div itemprop="url">
                       {{ game.website }}
+                    </div>
                   </p>
 
                   <h3>Companies:</h3>
                   <ul>
                       {% for company in game.companies.all %}
                           <li>
-                              <p><a href="{% url 'gamesApp:company_detail' company.id 'html' %}">
-                                {{ company.name }} </a></p>
+                            <p><a href="{% url 'gamesApp:company_detail' company.id 'html' %}">
+                              <div itemprop="producer" itemscope itemtype="http://schema.org/Organization">
+                                <span itemprop="name">{{ company.name }}</span>
+                              </div>
+                            </a></p>
                           </li>
                       {% endfor %}
                   </ul>
@@ -80,7 +89,10 @@
                       {% for genre in game.genres.all %}
                           <li>
                               <p><a href="{% url 'gamesApp:genre_detail' genre.id 'html' %}">
-                                {{ genre.name }} </a></p>
+                                <div itemprop="genre">
+                                  {{ genre.name }}
+                                </div>
+                              </a></p>
                           </li>
                       {% endfor %}
                   </ul>
@@ -89,35 +101,35 @@
                   <div class="text-right">
                     Created by {{ game.user }} on {{ game.date }}
                   </div>
-
               </div>
           </div>
 
           <div class="well">
               <h3> Reviews </h3>
-              <span property="aggregateRatin" rel="aggregateRating">
-                <p typeof="AggregateRating">
-                  Average rating <span property="ratingValue">{{ game.averageRating|stringformat:".1f"}}</span>
+              <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                  Average rating <span itemprop="ratingValue">{{ game.averageRating|stringformat:".1f"}}</span>
                   {% with game.gamereview_set.all|length as reviewCount %}
-                  from <span property="reviewCount">{{ reviewCount }}</span> review{{ reviewCount|pluralize }}
+                  from <span itemprop="reviewCount">{{ reviewCount }}</span> review{{ reviewCount|pluralize }}
                   {% endwith %}
-                </p>
-              </span>
+                  <span itemprop="itemReviewed" itemscope itemtype="http://schema.org/Thing">
+                    <span itemprop="name">{{ game.name }}</span>
+                  </span>
+              </div>
               <hr>
               {% for review in game.gamereview_set.all %}
               <div class="row">
                   <div class="col-md-12">
                       <p rel="reviewRating" typeof="Rating">
-                        <span property="worstRating" content="{{ RATING_CHOICES.0.0 }}"></span>
-                        <span property="ratingValue">{{ review.rating }}</span> start{{ review.rating|pluralize }}
+                        <span itemprop="worstRating" content="{{ RATING_CHOICES.0.0 }}"></span>
+                        <span itemprop="ratingValue">{{ review.rating }}</span> start{{ review.rating|pluralize }}
                         {% with RATING_CHOICES|last as best %}
-                        <span property="bestRating" content="{{ best.0 }}"></span>
+                        <span itemprop="bestRating" content="{{ best.0 }}"></span>
                         {% endwith %}
                       </p>
                       <p property="description">{{ review.comment }}</p>
                       <span class="pull-right">
                         Created by <span property="author"> {{ review.user }}</span> on
-                        <span property="datePublished" content=" {{ review.publish_date|date:'Y-m-d' }}">{{ review.publish_date }}</span>
+                        <span itemprop="datePublished" content=" {{ review.publish_date|date:'Y-m-d' }}">{{ review.publish_date }}</span>
                       </span>
                   </div>
               </div>

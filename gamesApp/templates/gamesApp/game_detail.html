@@ -29,31 +29,37 @@
                           DELETE</a>
                     </div>
                   {% endif %}
-                  </div>
-                  <!--<span vocab="http://schema.org/" typeof="VideoGame">-->
-                  <span itemscope itemtype="http://schema.org/VideoGame">
+              </div>
+                  <span vocab="http://schema.org/" typeof="VideoGame">
                   <h1>
-                    <div itemprop="name">{{ game.name }}</div>
-                    <!--<span property="name">{{ game.name }}</span>-->
-                    </h1>
-
+                    <div property="name">{{ game.name }}</div>
+                  </h1>
+                  <!-- Les propietats applicationCategory, offers i sameAs s'han
+                  afegit per recomanació (WARNINGS) de l'eina de proves de dades
+                  estructurades de Google amb valors no reals -->
+                  <div property="applicationCategory" content="VideoGame"></div>
+                  <div property="offers" typeof="Offer">
+                    <div property="price" content=0></div>
+                    <div property="priceCurrency" content=0></div>
+                  </div>
+                  <div property="sameAs" content="{{ game.website }}"></div>
                   <h3>Description:</h3>
                   <p>
-                    <div itemprop="description">
+                    <div property="description">
                       {{ game.description }}
                     </div>
                   </p>
 
                   <h3>Release year:</h3>
                   <p>
-                    <div itemprop="copyrightYear">
+                    <div property="copyrightYear">
                       {{ game.release_year }}
                     </div>
                   </p>
 
                   <h3>Website:</h3>
                   <p>
-                    <div itemprop="url">
+                    <div property="url">
                       {{ game.website }}
                     </div>
                   </p>
@@ -62,11 +68,11 @@
                   <ul>
                       {% for company in game.companies.all %}
                           <li>
-                            <p><a href="{% url 'gamesApp:company_detail' company.id 'html' %}">
-                              <div itemprop="producer" itemscope itemtype="http://schema.org/Organization">
-                                <span itemprop="name">{{ company.name }}</span>
-                              </div>
-                            </a></p>
+                            <div property="producer" typeof="Organization">
+                              <p><a property="url" href="{% url 'gamesApp:company_detail' company.id 'html' %}">
+                                  <span property="name">{{ company.name }}</span>
+                              </a></p>
+                            </div>
                           </li>
                       {% endfor %}
                   </ul>
@@ -75,11 +81,12 @@
                   <ul>
                       {% for platform in game.platforms.all %}
                           <li>
-                              <p><a href="{% url 'gamesApp:platform_detail' platform.id 'html' %}">
-                                <div itemprop="gamePlatform" itemscope itemtype="http://schema.org/Thing">
-                                  <span itemprop="name">{{ platform.name }}</span>
-                                </div>
+                            <div property="operatingSystem" content="{{ platform.name}}"></div>
+                            <div property="gamePlatform" typeof="Thing">
+                              <p><a property="url" href="{% url 'gamesApp:platform_detail' platform.id 'html' %}">
+                                  <span property="name">{{ platform.name }}</span>
                               </a></p>
+                            </div>
                           </li>
                       {% endfor %}
                   </ul>
@@ -89,7 +96,7 @@
                       {% for genre in game.genres.all %}
                           <li>
                               <p><a href="{% url 'gamesApp:genre_detail' genre.id 'html' %}">
-                                <div itemprop="genre">
+                                <div property="genre">
                                   {{ genre.name }}
                                 </div>
                               </a></p>
@@ -101,35 +108,46 @@
                   <div class="text-right">
                     Created by {{ game.user }} on {{ game.date }}
                   </div>
+                  <div property="aggregateRating" typeof="AggregateRating">
+                    <span property="ratingValue" content="{{ game.averageRating|stringformat:".1f"}}"></span>
+                    {% with game.gamereview_set.all|length as reviewCount %}
+                    <span property="reviewCount" content="{{ reviewCount }}"></span>
+                    {% endwith %}
+                    <span property="itemReviewed" typeof="Thing">
+                      <span property="name" content="{{ game.name }}"></span>
+                    </span>
+                    <span property="worstRating" content=1.0></span>
+                    <span property="bestRating" content=5.0></span>
+                  </div>
+                  {% for review in game.gamereview_set.all %}
+                    <div property="review" typeof="Review">
+                      <span property="description" content="{{ review.comment}}"></span>
+                      <span property="author" typeof="Person">
+                        <span property="name" content="{{ review.user }}"></span>
+                      </span>
+                      <span property="datePublished" content="{{ review.publish_date|date:'Y-m-d'}}"></span>
+                    </div>
+                  {% endfor %}
+                </span>
               </div>
           </div>
 
           <div class="well">
               <h3> Reviews </h3>
-              <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-                  Average rating <span itemprop="ratingValue">{{ game.averageRating|stringformat:".1f"}}</span>
+              <p>
+                  Average rating {{ game.averageRating|stringformat:".1f"}}
                   {% with game.gamereview_set.all|length as reviewCount %}
-                  from <span itemprop="reviewCount">{{ reviewCount }}</span> review{{ reviewCount|pluralize }}
-                  {% endwith %}
-                  <span itemprop="itemReviewed" itemscope itemtype="http://schema.org/Thing">
-                    <span itemprop="name">{{ game.name }}</span>
-                  </span>
-              </div>
+                  from {{ reviewCount }} review{{ reviewCount|pluralize }}
+                  {% endwith %} of {{ game.name }}
+              </p>
               <hr>
               {% for review in game.gamereview_set.all %}
               <div class="row">
                   <div class="col-md-12">
-                      <p rel="reviewRating" typeof="Rating">
-                        <span itemprop="worstRating" content="{{ RATING_CHOICES.0.0 }}"></span>
-                        <span itemprop="ratingValue">{{ review.rating }}</span> start{{ review.rating|pluralize }}
-                        {% with RATING_CHOICES|last as best %}
-                        <span itemprop="bestRating" content="{{ best.0 }}"></span>
-                        {% endwith %}
-                      </p>
-                      <p property="description">{{ review.comment }}</p>
+                      <p>{{ review.rating }} start{{ review.rating|pluralize }}</p>
+                      <p>{{ review.comment }}</p>
                       <span class="pull-right">
-                        Created by <span property="author"> {{ review.user }}</span> on
-                        <span itemprop="datePublished" content=" {{ review.publish_date|date:'Y-m-d' }}">{{ review.publish_date }}</span>
+                        Created by {{ review.user }} on {{ review.publish_date }}
                       </span>
                   </div>
               </div>
